@@ -80,14 +80,27 @@ public class outdoor extends activity{
                 curr.data = curr.next.data;
                 curr.next = curr.next.next;
             }else{
-                curr.data = null;
-                curr.next = null;
+                return remove(head, curr);
             }
             return 1;
         } else {
             remove(curr.next);
         }
         return 1;
+    }
+
+    private int remove(node prev, node curr){
+        if(curr == null) return 0;
+        if(prev.next != curr){
+            return remove(prev.next, curr);
+        }
+        if(prev.next == curr){
+            prev.next = null;
+            tail = prev;
+            tail = prev;
+            return 1;
+        }
+        return 0;
     }
     public node get_head(){
         return head;

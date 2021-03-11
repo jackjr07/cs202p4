@@ -77,8 +77,8 @@ public class Main {
     static int menu(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Choose your options\n");
-        System.out.println("[1] Add your activity\n [2] Display all your activity\n [3] Remove your activity");
-        System.out.println("[4] Display all your activity as table");
+        System.out.println(" [1] Add your activity\n [2] Display all your activity\n [3] Remove your activity");
+        System.out.println(" [4] Display all your activity as table");
         int answer = scanner.nextInt();
         return answer;
     }
@@ -91,8 +91,12 @@ public class Main {
         indoor.node arr_1 = (indoor.node) arr[0];
         outdoor.node arr_2 = (outdoor.node) arr[1];
         System.out.println("Display the LLL, from the array");
-        arr_1.display();
-        arr_2.display();
+        if(arr_1 != null) {
+            arr_1.display();
+        }
+        if(arr_2 != null) {
+            arr_2.display();
+        }
         return 1;
     };
 }
