@@ -6,8 +6,11 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+        //
         indoor indoor_obj = new indoor();
         outdoor outdoor_obj = new outdoor();
+        tree tree_obj = new tree();
+        //
         Scanner scanner = new Scanner(System.in);
         System.out.println("Jack's Program4\n");
         int answer;
@@ -65,11 +68,26 @@ public class Main {
                 if(ans == 2){
                     outdoor_obj.remove();
                 }
-            } else if(answer == 4){
+            } else if(answer == 4) {
                 System.out.println("Constucting Array");
                 indoor.node in_head = indoor_obj.get_head();
                 outdoor.node out_head = outdoor_obj.get_head();
                 array_list(in_head, out_head);
+            } else if(answer == 5) {
+                System.out.println("Create user");
+                System.out.println("Youe name: ");
+                String name = scanner.next();
+                System.out.println("Your Phone: ");
+                long phone = scanner.nextLong();
+                System.out.println("Your address: ");
+                String address = scanner.next();
+                user userAdd = new user(name, phone, address);
+                tree_obj.addUsertree(userAdd);
+            } else if(answer == 6){
+                tree_obj.displayTree();
+            } else if(answer == 7){
+                int height = tree_obj.getHeight();
+                System.out.println("Height: " + height);
             }
         } while (answer != 9);
     };
