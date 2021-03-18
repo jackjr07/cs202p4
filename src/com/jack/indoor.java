@@ -33,6 +33,7 @@ public class indoor extends activity {
         }
 
     }
+
     public int insert(indoor data) {
         node temp = new node(data);
         if (head == null) {

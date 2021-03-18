@@ -54,7 +54,6 @@ public class Main {
                     outdoor temp = new other_out(title, location, time);
                     outdoor_obj.insert(temp);
                 }
-
             } else if (answer == 2) {
                 indoor_obj.display();
                 outdoor_obj.display();
@@ -85,11 +84,21 @@ public class Main {
                 tree_obj.addUsertree(userAdd);
             } else if(answer == 6){
                 tree_obj.displayTree();
-            } else if(answer == 7){
-                int height = tree_obj.getHeight();
-                System.out.println("Height: " + height);
+            } else if(answer == 7) {
+                System.out.println("POST WORKOUT!! ");
+                System.out.println("What is your name: ");
+                String name = scanner.next();
+                tree_obj.postAct(name);
+            } else if(answer == 8){
+                System.out.println("Display all your WORKOUTs!! ");
+                System.out.println("What is your name: ");
+                String name = scanner.next();
+                tree_obj.displayActUser(name);
+            } else if(answer == 9){
+                System.out.println("Display all the workouts for all user");
+                tree_obj.displayAll();
             }
-        } while (answer != 9);
+        } while (answer != 10);
     };
 
     static int menu(){
@@ -97,6 +106,9 @@ public class Main {
         System.out.println("Choose your options\n");
         System.out.println(" [1] Add your activity\n [2] Display all your activity\n [3] Remove your activity");
         System.out.println(" [4] Display all your activity as table");
+        System.out.println(" ------ Program5 --------");
+        System.out.println(" [5] Add User\n [6] Display All User\n [7] Post your Workout\n" +
+                " [8] User and Their workout\n [9] Display users and their workout");
         int answer = scanner.nextInt();
         return answer;
     }
