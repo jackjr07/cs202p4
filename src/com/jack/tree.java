@@ -1,69 +1,23 @@
 package com.jack;
-
+/*
+Jack Wanitkun
+CS202 Program 5
+This is the avl tree for program 5
+I design as, I have a node that contains the user information, height, left and right.
+then I have a tree that will interact with the testing interface.
+ */
 import java.util.Scanner;
 
-class user {
-
-    public void displayUser(){
-        System.out.println("User name: " + this.name + "\n User phone number: " + this.phone + "\n User address: " + this.address);
-    }
-    public user(String name, long phone, String address){
-        this.name = name;
-        this.phone = phone;
-        this.address = address;
-    }
-    public int getKey(){
-        int phone = (int)this.phone;
-        phone = phone % 100;
-        return phone;
-    }
-    public String getName(){
-        return this.name;
-    }
-
-    private String name;
-    private long phone;
-    private String address;
-
-}
-
-class act{
-    public act(){
-        this.name = null;
-        this.time = 0;
-        this.next = null;
-    }
-    public act(String name, int time){
-        this.name = name;
-        this.time = time;
-        this.next = null;
-    }
-
-    public act getLast(act head, String name, int time){
-        if(head.next != null){
-            return getLast(head.next, name, time);
-        }
-        head.next = new act(name, time);
-        return head.next;
-    }
-
-    public int displayAct(act curr){
-        if(curr == null) return 0;
-        System.out.println("Workout: " + curr.name + "\n For (mins): " + curr.time);
-        return displayAct(curr.next);
-    }
-
-    private String name;
-    private int time;
-    private act next;
-}
-
+//This is a node inside the tree - This is a AVl tree
+//The balance is located with the insert function.
+//The delete still have a problem.
 class node{
     public node(){
         this.userNode = null;
         this.key = 0;
         this.left = null;
         this.right = null;
+        this.height = 0;
     }
     public node(user userAdd){
         this.userNode = userAdd;
@@ -130,15 +84,14 @@ class node{
         return Math.max(getHeight2(curr.left), getHeight2(curr.right)) + 1;
     }
 
-    ///STOP HERE
-
     public int display(node curr){
         if(curr == null){ return 0;}
        if(curr.left != null){
            display(curr.left);
        }
        curr.userNode.displayUser();
-        System.out.println(curr.height);
+       System.out.println(curr.height);
+
        if(curr.right != null){
            display(curr.right);
        }
@@ -203,18 +156,6 @@ class node{
         newNode.height = getHeight2(newNode);
         return newNode;
     }
-    /*
-    public indoor addAct(indoor indoor_obj){
-        if(inHeadAct == null) {
-            inHeadAct = new indoor();
-            inHeadAct = indoor_obj;
-            return inHeadAct;
-        }else{
-            inHeadAct.insert(indoor_obj);
-        }
-        return inHeadAct;
-    }
-    */
 
     public node find(node curr, String name){
         return findP(curr, name);
@@ -223,7 +164,7 @@ class node{
         if (curr.left != null){
             findP(curr.left, name);
         }
-        if((curr.userNode.getName()).equals(name) == true){
+        if((curr.userNode.getName()).equals(name)){
             curr.display(curr);
             return curr;
         }
@@ -233,27 +174,13 @@ class node{
         return curr;
     }
 
-    public int addAct(String name, int time){
-        if(this.head == null){
-            this.head = new act(name, time);
-            return 1;
-        }
-        this.head.getLast(this.head, name, time);
-        return 1;
-    }
-
-    public void actDisplay(){
-        this.head.displayAct(this.head);
-        return;
-    }
-
     protected int displayAll(node curr) {
         if(curr == null) return 0;
         if(curr.left != null){
             display(curr.left);
         }
         curr.userNode.displayUser();
-        curr.head.displayAct(head);
+        curr.userNode.displayAct();
         System.out.println(curr.height);
         if(curr.right != null){
             display(curr.right);
@@ -261,8 +188,54 @@ class node{
         return 1;
     }
 
+    public int addIndoorNode(int type, String name, String location, int time){
+        node temp = this.find(this, name);
+        System.out.println("Found: " + temp.userNode.getName());
+        temp.userNode.addIndoor(type,location,time);
+        temp.userNode.displayAct();
+        return 1;
+    }
+    private node inorderSuccessor(node curr){
+        if(curr == null) return null;
+        if(curr.left != null) return inorderSuccessor(curr.left);
+        return curr;
+    }
+
+    public node removeNode(node curr, String name){
+        if(curr == null) return null;
+        node temp = find(curr, name);
+        System.out.println("In remove");
+        if(temp.userNode.getKey() == curr.userNode.getKey()){
+            System.out.println("remove at root");
+            temp = null;
+            return null;
+        }
+        //temp.userNode.displayUser();
+        System.out.println("Started recursive");
+        if(temp.userNode.getKey() < curr.userNode.getKey()){
+            curr.left = removeNode(curr.left, name);
+        }
+        else if(temp.userNode.getKey() > curr.userNode.getKey()){
+            curr.right = removeNode(curr.right, name);
+        }
+        else{
+            if(curr.left == null) return curr.right;
+            else if(curr.right == null) return curr.left;
+
+            curr = inorderSuccessor(curr.right);
+            curr.right = removeNode(curr.right, curr.userNode.getName());
+        }
+        return curr;
+    }
+
+    public int removeAct(node curr,int ans, String name){
+        node temp = find(curr, name);
+        //need remove function in infor
+        temp.userNode.removeAct(ans);
+        return 3;
+    }
+
     private user userNode;
-    private act head;
     private node left;
     private node right;
     private int height;
@@ -281,8 +254,6 @@ public class tree extends node {
             root.addRoot(root);
             return 1;
         }else{
-            node temp = new node(userAdd);
-            //root.findLocation(root,temp);
             root.insertNode(root, userAdd);
         }
         return 0;
@@ -296,7 +267,7 @@ public class tree extends node {
         root.display(root);
         return 1;
     }
-
+/*
     public int postAct(String name){
         Scanner scanner = new Scanner(System.in);
        if(root == null) return 0;
@@ -312,12 +283,16 @@ public class tree extends node {
        return 1;
     }
 
-
-
     public int displayActUser(String name){
         if(root == null) return 0;
         node user = root.find(root,name);
         user.actDisplay();
+        return 1;
+    }
+
+ */
+    public int addIndoorTree(int type, String name, String location, int time){
+        root.addIndoorNode(type,name,location,time);
         return 1;
     }
     public int displayAll(){
@@ -326,19 +301,15 @@ public class tree extends node {
         return 1;
     }
 
+    public int removeUser(String name){
+        root.removeNode(root, name);
+        return 1;
+    }
 
-    //New insert for balancing
-    /*
-    public node insert(user userAdd){
-        if(root == null) {
-            root = new node(userAdd);
-            root.addRoot(root);
-            return root;
-        }else{
-            return insertNode(root, userAdd);
-        }
-    }*/
-
+    public int removeAct(int ans, String name){
+        root.removeAct(root,ans, name);
+        return 1;
+    }
 
     private node root;
 }

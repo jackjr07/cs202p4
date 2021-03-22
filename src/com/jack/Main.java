@@ -1,5 +1,9 @@
 package com.jack;
-
+/*
+Jack Wanitkun
+CS202 Program 4 and 5
+This is the testing interface
+ */
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -84,21 +88,36 @@ public class Main {
                 tree_obj.addUsertree(userAdd);
             } else if(answer == 6){
                 tree_obj.displayTree();
-            } else if(answer == 7) {
-                System.out.println("POST WORKOUT!! ");
-                System.out.println("What is your name: ");
-                String name = scanner.next();
-                tree_obj.postAct(name);
             } else if(answer == 8){
                 System.out.println("Display all your WORKOUTs!! ");
                 System.out.println("What is your name: ");
                 String name = scanner.next();
-                tree_obj.displayActUser(name);
-            } else if(answer == 9){
+                //tree_obj.displayActUser(name);
+            } else if(answer == 9) {
                 System.out.println("Display all the workouts for all user");
                 tree_obj.displayAll();
+            } else if(answer == 7){
+                System.out.println("What is your name: ");
+                String name = scanner.next();
+                System.out.println("What kind of workout you do\n"+
+                        "[1] Yoga, [2] weightlifting, [3] Other indoor workout, [4] Running, [5] Cycling, [6] other outdoor workout");
+                int type = scanner.nextInt();
+                System.out.println("Where you workout: ");
+                String location = scanner.next();
+                System.out.println("How many mins you work out: ");
+                int time = scanner.nextInt();
+                tree_obj.addIndoorTree(type,name, location, time);
+            } else if(answer == 10){
+                System.out.println("What is your name: ");
+                String name = scanner.next();
+                System.out.println("[1] indoor workout, [2] outdoor workout");
+                int ans = scanner.nextInt();
+                tree_obj.removeAct(ans, name);
+            } else if(answer == 11){
+                //Remove that user
+                tree_obj.removeUser("jack");
             }
-        } while (answer != 10);
+        } while (answer != 20);
     };
 
     static int menu(){
@@ -108,7 +127,10 @@ public class Main {
         System.out.println(" [4] Display all your activity as table");
         System.out.println(" ------ Program5 --------");
         System.out.println(" [5] Add User\n [6] Display All User\n [7] Post your Workout\n" +
-                " [8] User and Their workout\n [9] Display users and their workout");
+                " [8] User and Their workout\n [9] Display users and their workout\n " +
+                "[10] Remove your activity\n [11] Remove user\n " +
+                "------ EXIT --------\n " +
+                "[20] Exit");
         int answer = scanner.nextInt();
         return answer;
     }
